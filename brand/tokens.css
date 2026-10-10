@@ -1,0 +1,20 @@
+/* KD brand tokens. Подключение: <link rel="stylesheet" href="../brand/tokens.css"> */
+@import url("https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap&subset=cyrillic");
+
+:root {
+  /* Цвета: тёмный интерфейс с розово-фиолетовым свечением */
+  --kd-void: #0a0a0b;       /* фон страницы */
+  --kd-panel: #131315;      /* панели и карточки */
+  --kd-panel-2: #1a1a1d;    /* вложенные поверхности, поля */
+  --kd-line: rgba(255, 255, 255, 0.08); /* тонкие рамки */
+  --kd-text: #f2f2f4;       /* основной текст */
+  --kd-muted: #8c8c96;      /* второстепенный текст */
+  --kd-violet: #8b5cf6;     /* свечение, заливка слайдера */
+  --kd-pink: #ff4fa3;       /* главный акцент, курсор логотипа */
+  --kd-grad: linear-gradient(110deg, #5b34e0, #a838cf 55%, #d8337f); /* кнопки (белый текст) */
+
+  /* Шрифты */
+  --kd-font-display: "Onest", system-ui, sans-serif;
+  --kd-font-body: "Onest", system-ui, sans-serif;
+  --kd-font-mono: "JetBrains Mono", ui-monospace, Consolas, monospace;
+}

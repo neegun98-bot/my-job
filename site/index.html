@@ -1,0 +1,701 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<title>KD - продвижение бизнеса в соцсетях</title>
+<meta name="description" content="KD берёт на себя соцсети, Яндекс.Директ, блоги, контент, сайт и автоматизацию. Нейросети делают рутину, люди отвечают за результат.">
+<link rel="icon" href="../brand/logo-mark.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../brand/tokens.css">
+<script>document.documentElement.classList.add('js');</script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; background: var(--kd-void); }
+  body {
+    margin: 0;
+    font-family: var(--kd-font-body);
+    font-size: 1.0625rem;
+    line-height: 1.6;
+    color: var(--kd-text);
+    background: var(--kd-void);
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3, p, ul, ol { margin: 0; }
+  ul, ol { padding: 0; list-style: none; }
+  a { color: inherit; }
+  svg { display: block; }
+  button { font: inherit; color: inherit; }
+  :focus-visible { outline: 2px solid var(--kd-pink); outline-offset: 3px; }
+
+  .wrap { width: min(1160px, 100% - 32px); margin-inline: auto; }
+  .display { font-family: var(--kd-font-display); font-weight: 600; letter-spacing: -0.03em; line-height: 1.1; text-wrap: balance; }
+  .muted { color: var(--kd-muted); }
+
+  /* ---------- Глянцевые кнопки ---------- */
+  .btn {
+    position: relative; isolation: isolate; overflow: hidden;
+    display: inline-flex; align-items: center; justify-content: center;
+    min-height: 54px; padding: 0 30px;
+    font: 600 1rem/1 var(--kd-font-body);
+    border-radius: 14px; border: 0;
+    text-decoration: none; cursor: pointer;
+    transition: transform .18s ease, box-shadow .25s ease, filter .25s ease, background-color .2s ease;
+  }
+  .btn > span { position: relative; z-index: 2; }
+  .btn:active { transform: scale(.97) !important; }
+
+  .btn-glossy { background-size: 260% 100%; animation: flow 5s linear infinite; }
+  .btn-glossy::before {
+    content: ""; position: absolute; inset: 0 0 50% 0; z-index: 1; pointer-events: none;
+    border-radius: 14px 14px 40% 40% / 14px 14px 18px 18px;
+    background: linear-gradient(180deg, rgba(255,255,255,.34), rgba(255,255,255,.03));
+  }
+  .btn-glossy::after {
+    content: ""; position: absolute; top: -30%; bottom: -30%; left: -60%; width: 36%; z-index: 1; pointer-events: none;
+    background: linear-gradient(100deg, transparent, rgba(255,255,255,.7), transparent);
+    transform: skewX(-22deg);
+    animation: sheen 3.4s ease-in-out infinite;
+  }
+  .btn-glossy:hover { filter: brightness(1.12) saturate(1.1); }
+  .btn-glossy:hover::after { animation-duration: 1.2s; }
+  @keyframes flow { to { background-position: 260% 0; } }
+  @keyframes sheen { 0% { left: -60%; } 55%, 100% { left: 130%; } }
+
+  .btn-pink {
+    color: #fff; text-shadow: 0 1px 0 rgba(60, 0, 40, .35);
+    background-image: linear-gradient(110deg, #5b34e0, #a838cf, #d8337f, #a838cf, #5b34e0);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.55), inset 0 -3px 0 rgba(40,0,60,.35), 0 10px 30px -8px rgba(216,51,127,.65);
+  }
+  .btn-pink:hover { box-shadow: inset 0 1px 0 rgba(255,255,255,.55), inset 0 -3px 0 rgba(40,0,60,.35), 0 14px 40px -8px rgba(216,51,127,.95); }
+  .btn-graphite {
+    color: var(--kd-text);
+    background-image: linear-gradient(110deg, #232328, #34343b, #52525c, #34343b, #232328);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.28), inset 0 -3px 0 rgba(0,0,0,.4), 0 10px 24px -10px rgba(0,0,0,.8), 0 0 0 1px rgba(255,255,255,.08);
+  }
+  .btn-ghost { color: var(--kd-text); background: transparent; box-shadow: inset 0 0 0 1px rgba(255,255,255,.16); }
+  .btn-ghost:hover { background: rgba(255,255,255,.07); box-shadow: inset 0 0 0 1px rgba(255,255,255,.3); }
+  .btn-sm { min-height: 44px; padding: 0 22px; border-radius: 12px; }
+
+  /* ---------- Первый экран: Attention ---------- */
+  .hero { position: relative; overflow: hidden; padding-bottom: clamp(64px, 9vw, 120px); }
+  .hero::before {
+    content: ""; position: absolute; inset: 0; pointer-events: none;
+    background:
+      radial-gradient(circle 520px at var(--sx, 74%) var(--sy, 30%), rgba(255,79,163,.17), rgba(139,92,246,.08) 45%, rgba(0,0,0,0) 70%);
+  }
+  .hero > .wrap { position: relative; z-index: 1; }
+  .bar { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 22px; }
+  .brand { display: inline-flex; align-items: center; gap: 12px; text-decoration: none; font-weight: 700; font-size: 1.2rem; letter-spacing: -0.02em; }
+  .brand svg { width: 38px; height: 38px; transition: transform .3s ease; }
+  .brand:hover svg { transform: rotate(-8deg) scale(1.08); }
+  .bar nav { display: flex; align-items: center; gap: 28px; }
+  .bar nav a:not(.btn) { position: relative; text-decoration: none; font-weight: 500; color: var(--kd-muted); padding-block: 4px; transition: color .2s ease; }
+  .bar nav a:not(.btn):hover { color: var(--kd-text); }
+  .bar nav a:not(.btn)::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 2px; background: var(--kd-grad); transform: scaleX(0); transform-origin: left; transition: transform .25s ease; }
+  .bar nav a:not(.btn):hover::after { transform: scaleX(1); }
+
+  .hero-grid { display: grid; grid-template-columns: 1.1fr .9fr; gap: clamp(32px, 5vw, 72px); align-items: center; padding-top: clamp(40px, 7vw, 96px); }
+  .hero h1 { font-size: clamp(2.1rem, 4.8vw, 4rem); }
+  .cursor {
+    display: inline-block; width: .34em; height: .74em; margin-left: .14em;
+    background: linear-gradient(180deg, #ff7ab8, #ff4fa3); border-radius: 3px; vertical-align: baseline;
+    box-shadow: 0 0 18px rgba(255,79,163,.8);
+    animation: blink 1.1s steps(1) infinite;
+  }
+  @keyframes blink { 50% { opacity: 0; } }
+  .hero .lead { margin-top: 24px; max-width: 34em; font-size: 1.1875rem; color: var(--kd-muted); }
+  .hero .actions { margin-top: 36px; display: flex; flex-wrap: wrap; gap: 14px; }
+
+  /* Слайдер масштаба */
+  .tune {
+    background: var(--kd-panel); border-radius: 20px; padding: 24px 24px 22px;
+    box-shadow: inset 0 0 0 1px var(--kd-line), 0 30px 60px -30px rgba(0,0,0,.9), 0 0 80px -30px rgba(139,92,246,.35);
+    transform: perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+    transition: transform .25s ease-out;
+  }
+  .tune-head { display: flex; align-items: center; gap: 10px; font-size: 1.05rem; }
+  .tune-head .val { color: var(--kd-text); font-weight: 600; flex: 1; }
+  .tune-head .info { width: 20px; height: 20px; color: var(--kd-muted); cursor: help; }
+  .tune-scale { margin-top: 22px; display: flex; justify-content: space-between; font-size: .95rem; color: var(--kd-muted); }
+  .rangewrap { position: relative; height: 34px; margin-top: 8px; }
+  .ticks { position: absolute; left: 17px; right: 17px; top: 50%; display: flex; justify-content: space-between; transform: translateY(-50%); pointer-events: none; }
+  .ticks i { width: 4px; height: 4px; border-radius: 50%; background: rgba(255,255,255,.28); }
+  .tune input[type=range] {
+    position: absolute; inset: 0; width: 100%; height: 34px; margin: 0; z-index: 2;
+    -webkit-appearance: none; appearance: none; background: transparent; cursor: pointer;
+  }
+  .tune input[type=range]::-webkit-slider-runnable-track {
+    height: 14px; border-radius: 8px;
+    background: linear-gradient(90deg, rgba(139,92,246,.15), var(--kd-violet) var(--p, 33%), var(--kd-panel-2) var(--p, 33%));
+    box-shadow: inset 0 0 0 1px var(--kd-line);
+  }
+  .tune input[type=range]::-moz-range-track {
+    height: 14px; border-radius: 8px;
+    background: linear-gradient(90deg, rgba(139,92,246,.15), var(--kd-violet) var(--p, 33%), var(--kd-panel-2) var(--p, 33%));
+    box-shadow: inset 0 0 0 1px var(--kd-line);
+  }
+  .tune input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none; width: 34px; height: 34px; margin-top: -10px; border: 0; border-radius: 10px;
+    background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0' stop-color='%23ff7ab8'/><stop offset='1' stop-color='%23c13fd6'/></linearGradient></defs><rect width='64' height='64' rx='16' fill='url(%23g)'/><g fill='none' stroke='%23fff' stroke-width='4.5' stroke-linecap='round' stroke-linejoin='round'><path d='M14 20V44'/><path d='M26 20L15 32L26 44'/><path d='M33 20H38a12 12 0 0 1 0 24H33Z'/></g><rect x='39' y='28' width='5' height='8' rx='1' fill='%230a0a0b'/></svg>") center/100% 100% no-repeat;
+    box-shadow: 0 0 22px rgba(255,79,163,.8);
+    transition: box-shadow .2s ease, transform .15s ease;
+  }
+  .tune input[type=range]::-moz-range-thumb {
+    width: 34px; height: 34px; border: 0; border-radius: 10px;
+    background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0' stop-color='%23ff7ab8'/><stop offset='1' stop-color='%23c13fd6'/></linearGradient></defs><rect width='64' height='64' rx='16' fill='url(%23g)'/><g fill='none' stroke='%23fff' stroke-width='4.5' stroke-linecap='round' stroke-linejoin='round'><path d='M14 20V44'/><path d='M26 20L15 32L26 44'/><path d='M33 20H38a12 12 0 0 1 0 24H33Z'/></g><rect x='39' y='28' width='5' height='8' rx='1' fill='%230a0a0b'/></svg>") center/100% 100% no-repeat;
+    box-shadow: 0 0 22px rgba(255,79,163,.8);
+  }
+  .tune input[type=range]:hover::-webkit-slider-thumb { box-shadow: 0 0 34px rgba(255,79,163,1); transform: scale(1.06); }
+  .tune input[type=range]:focus-visible { outline: none; }
+  .tune input[type=range]:focus-visible::-webkit-slider-thumb { outline: 2px solid #fff; outline-offset: 3px; }
+  .tune-note { margin-top: 10px; min-height: 1.5em; font-size: .95rem; color: var(--kd-muted); }
+  .tune-list { margin-top: 18px; padding-top: 18px; border-top: 1px solid var(--kd-line); display: grid; gap: 10px; font-size: .98rem; }
+  .tune-list li { position: relative; padding-left: 22px; animation: rise .35s ease-out both; animation-delay: var(--i, 0s); }
+  .tune-list li::before { content: ""; position: absolute; left: 0; top: .6em; width: 8px; height: 8px; border-radius: 50%; background: var(--kd-grad); box-shadow: 0 0 10px rgba(255,79,163,.7); }
+  @keyframes rise { from { opacity: 0; transform: translateY(6px); } }
+
+  /* ---------- Секции ---------- */
+  section { padding-block: clamp(64px, 9vw, 112px); }
+  h2.display { font-size: clamp(1.7rem, 3.4vw, 2.6rem); max-width: 18em; }
+  .section-lead { margin-top: 16px; max-width: 36em; color: var(--kd-muted); }
+
+  /* ---------- Interest: услуги тремя панелями ---------- */
+  .groups { margin-top: 48px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; align-items: start; }
+  .group { background: var(--kd-panel); border-radius: 20px; padding: 10px; box-shadow: inset 0 0 0 1px var(--kd-line); }
+  .group h3 { padding: 16px 14px 10px; font-size: 1.05rem; font-weight: 600; letter-spacing: -0.01em; color: var(--kd-muted); }
+  .items { display: grid; gap: 2px; }
+  .item {
+    position: relative; isolation: isolate; overflow: hidden;
+    display: block; padding: 16px 14px; border-radius: 12px; text-decoration: none;
+    transition: background-color .2s ease, transform .2s ease;
+  }
+  .item::before {
+    content: ""; position: absolute; inset: 0; z-index: -1; opacity: 0; transition: opacity .2s ease;
+    background: radial-gradient(260px circle at var(--mx, 50%) var(--my, 50%), rgba(255,79,163,.2), rgba(139,92,246,.08) 60%, rgba(0,0,0,0) 100%);
+  }
+  .item:hover, .item:focus-visible { background: var(--kd-panel-2); transform: translateX(4px); }
+  .item:hover::before, .item:focus-visible::before { opacity: 1; }
+  .item b { display: block; font-weight: 600; }
+  .item span { display: block; margin-top: 2px; font-size: .95rem; color: var(--kd-muted); }
+
+  /* ---------- Desire ---------- */
+  .desire { background: linear-gradient(180deg, var(--kd-void), #0e0e11 18%, #0e0e11 82%, var(--kd-void)); }
+  .gains { margin-top: 48px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .gain { background: var(--kd-panel); border-radius: 20px; padding: 28px; box-shadow: inset 0 0 0 1px var(--kd-line); transition: box-shadow .25s ease, transform .25s ease; }
+  .gain:hover { transform: translateY(-3px); box-shadow: inset 0 0 0 1px rgba(255,79,163,.45), 0 20px 50px -24px rgba(255,79,163,.45); }
+  .gain h3 { font-size: 1.2rem; font-weight: 600; line-height: 1.3; letter-spacing: -0.01em; }
+  .gain p { margin-top: 10px; color: var(--kd-muted); }
+  .steps-title { margin-top: clamp(56px, 8vw, 96px); font-size: clamp(1.4rem, 2.6vw, 1.9rem); }
+  .steps { margin-top: 32px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; counter-reset: step; }
+  .steps li { counter-increment: step; }
+  .steps li::before {
+    content: counter(step);
+    display: block; margin-bottom: 12px; width: fit-content;
+    font-weight: 700; font-size: 3.2rem; line-height: 1; letter-spacing: -0.04em;
+    background: var(--kd-grad); -webkit-background-clip: text; background-clip: text; color: transparent;
+    filter: drop-shadow(0 0 18px rgba(255,79,163,.45));
+  }
+  .steps h3 { font-size: 1.1rem; font-weight: 600; }
+  .steps p { margin-top: 8px; color: var(--kd-muted); }
+
+  /* ---------- Action ---------- */
+  .action { position: relative; overflow: hidden; }
+  .action::before { content: ""; position: absolute; inset: 0; pointer-events: none; background: radial-gradient(ellipse 60% 70% at 85% 60%, rgba(139,92,246,.2), rgba(255,79,163,.1) 50%, rgba(0,0,0,0) 75%); }
+  .action-grid { position: relative; display: grid; grid-template-columns: 1fr 1fr; gap: clamp(32px, 6vw, 80px); align-items: start; }
+  .action p.lead { margin-top: 18px; max-width: 28em; font-size: 1.1875rem; color: var(--kd-muted); }
+  .contacts { margin-top: 28px; display: flex; flex-wrap: wrap; gap: 12px; }
+  .form { background: var(--kd-panel); border-radius: 20px; padding: clamp(22px, 3vw, 34px); display: grid; gap: 18px; box-shadow: inset 0 0 0 1px var(--kd-line), 0 30px 60px -30px rgba(0,0,0,.9); }
+  .field { display: grid; gap: 6px; }
+  .field label { font-weight: 500; font-size: .95rem; color: var(--kd-muted); }
+  .field input, .field textarea {
+    width: 100%; padding: 13px 14px; font: inherit; color: var(--kd-text);
+    background: var(--kd-panel-2); border: 0; border-radius: 12px; box-shadow: inset 0 0 0 1px var(--kd-line);
+    transition: box-shadow .2s ease, background-color .2s ease;
+  }
+  .field input::placeholder, .field textarea::placeholder { color: #5f5f68; }
+  .field input:hover, .field textarea:hover { box-shadow: inset 0 0 0 1px rgba(255,255,255,.2); }
+  .field input:focus, .field textarea:focus { outline: none; box-shadow: inset 0 0 0 1px var(--kd-pink), 0 0 0 4px rgba(255,79,163,.16); }
+  .field textarea { min-height: 110px; resize: vertical; }
+  .note { font-size: .875rem; color: var(--kd-muted); }
+
+  footer { padding-block: 28px; font-size: .9rem; color: var(--kd-muted); border-top: 1px solid var(--kd-line); }
+  footer .wrap { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; }
+  footer .brand { color: var(--kd-text); font-size: 1.05rem; }
+  footer .brand svg { width: 30px; height: 30px; }
+
+  /* ---------- Появление при прокрутке ---------- */
+  .js .reveal { opacity: 0; transform: translateY(16px); transition: opacity .6s ease, transform .6s ease; transition-delay: var(--d, 0s); }
+  .js .reveal.in { opacity: 1; transform: none; }
+
+  /* ---------- Чат ---------- */
+  .chat-fab {
+    position: fixed; right: 20px; bottom: 20px; z-index: 60;
+    display: inline-flex; align-items: center; gap: 10px;
+    min-height: 58px; padding: 0 24px 0 18px; border-radius: 999px;
+  }
+  .chat-fab svg { width: 24px; height: 24px; position: relative; z-index: 2; }
+  .chat-fab .dot { position: relative; z-index: 2; width: 10px; height: 10px; border-radius: 50%; background: #35e08a; box-shadow: 0 0 0 0 rgba(53,224,138,.7); animation: ping 2s infinite; }
+  @keyframes ping { 70% { box-shadow: 0 0 0 10px rgba(53,224,138,0); } 100% { box-shadow: 0 0 0 0 rgba(53,224,138,0); } }
+  .chat-fab[aria-expanded="true"] { display: none; }
+
+  .chat {
+    position: fixed; right: 20px; bottom: 20px; z-index: 70;
+    width: 390px; max-width: calc(100vw - 24px); height: min(580px, calc(100dvh - 40px));
+    display: flex; flex-direction: column; overflow: hidden;
+    background: var(--kd-panel); border-radius: 22px;
+    box-shadow: 0 30px 70px -20px rgba(0,0,0,.9), inset 0 0 0 1px rgba(255,255,255,.1), 0 0 80px -30px rgba(255,79,163,.4);
+    transform-origin: bottom right; animation: pop .22s ease-out;
+  }
+  .chat[hidden] { display: none; }
+  @keyframes pop { from { opacity: 0; transform: scale(.94) translateY(10px); } }
+  .chat-head { display: flex; align-items: center; gap: 12px; padding: 14px 16px; background: var(--kd-panel-2); border-bottom: 1px solid var(--kd-line); }
+  .chat-head svg { width: 40px; height: 40px; flex: none; }
+  .chat-head .who { flex: 1; line-height: 1.3; }
+  .chat-head .who b { display: block; font-weight: 600; }
+  .chat-head .who small { display: flex; align-items: center; gap: 6px; font-size: .8125rem; color: var(--kd-muted); }
+  .chat-head .who small::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: #35e08a; }
+  .chat-close { width: 36px; height: 36px; border: 0; border-radius: 10px; background: rgba(255,255,255,.07); font-size: 1.4rem; line-height: 1; cursor: pointer; transition: background .2s ease; }
+  .chat-close:hover { background: rgba(255,255,255,.16); }
+  .chat-disclosure { padding: 8px 16px; font-size: .8125rem; color: var(--kd-muted); border-bottom: 1px solid var(--kd-line); }
+  .chat-log { flex: 1; overflow-y: auto; padding: 16px; display: flex; flex-direction: column; gap: 10px; scroll-behavior: smooth; }
+  .msg { max-width: 84%; padding: 10px 14px; border-radius: 16px; line-height: 1.45; font-size: .98rem; animation: pop .2s ease-out; white-space: pre-wrap; }
+  .msg.bot { align-self: flex-start; background: var(--kd-panel-2); border-bottom-left-radius: 5px; }
+  .msg.me { align-self: flex-end; color: #fff; background: linear-gradient(110deg, #5b34e0, #b03cd9 60%, #d8337f); border-bottom-right-radius: 5px; }
+  .msg .go { display: inline-block; margin-top: 8px; padding: 8px 14px; border-radius: 10px; background: var(--kd-text); color: var(--kd-void); font-weight: 600; text-decoration: none; }
+  .typing { align-self: flex-start; display: flex; gap: 4px; padding: 12px 14px; background: var(--kd-panel-2); border-radius: 16px; border-bottom-left-radius: 5px; }
+  .typing i { width: 7px; height: 7px; border-radius: 50%; background: var(--kd-muted); animation: bounce 1s infinite; }
+  .typing i:nth-child(2) { animation-delay: .15s; }
+  .typing i:nth-child(3) { animation-delay: .3s; }
+  @keyframes bounce { 0%, 60%, 100% { transform: translateY(0); opacity: .5; } 30% { transform: translateY(-4px); opacity: 1; } }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; padding: 0 16px 10px; }
+  .chip { padding: 8px 12px; border: 0; border-radius: 999px; background: var(--kd-panel-2); box-shadow: inset 0 0 0 1px var(--kd-line); font-size: .875rem; cursor: pointer; transition: box-shadow .2s ease, transform .15s ease, background-color .2s ease; }
+  .chip:hover { box-shadow: inset 0 0 0 1px var(--kd-pink); background: #231a22; transform: translateY(-1px); }
+  .chat-form { display: flex; gap: 8px; padding: 12px 16px 16px; border-top: 1px solid var(--kd-line); }
+  .chat-form input { flex: 1; min-width: 0; padding: 12px 14px; font: inherit; color: var(--kd-text); background: var(--kd-panel-2); border: 0; border-radius: 12px; box-shadow: inset 0 0 0 1px var(--kd-line); transition: box-shadow .2s ease; }
+  .chat-form input::placeholder { color: #5f5f68; }
+  .chat-form input:focus { outline: none; box-shadow: inset 0 0 0 1px var(--kd-pink), 0 0 0 4px rgba(255,79,163,.16); }
+  .chat-form .btn { min-height: 46px; padding: 0 18px; border-radius: 12px; }
+
+  @media (max-width: 960px) {
+    .groups { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 880px) {
+    .hero-grid, .action-grid { grid-template-columns: 1fr; }
+    .gains, .steps { grid-template-columns: 1fr; gap: 20px; }
+    .steps { gap: 28px; }
+    .bar nav a:not(.btn) { display: none; }
+  }
+  @media (max-width: 480px) {
+    .chat { right: 12px; bottom: 12px; height: calc(100dvh - 24px); }
+    .chat-fab { right: 14px; bottom: 14px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .cursor, .btn-glossy, .btn-glossy::after, .chat-fab .dot, .typing i, .tune-list li { animation: none; }
+    .btn, .item, .gain, .tune, .brand svg { transition: none; }
+    .js .reveal { opacity: 1; transform: none; transition: none; }
+    .chat, .msg { animation: none; }
+  }
+</style>
+</head>
+<body>
+
+<header class="hero" id="hero">
+  <div class="wrap">
+    <div class="bar">
+      <a class="brand" href="#top" aria-label="KD, на главную">
+        <svg viewBox="0 0 64 64" aria-hidden="true">
+          <rect x="0.5" y="0.5" width="63" height="63" rx="15.5" fill="#1a1a1d" stroke="#fff" stroke-opacity=".14"/>
+          <g fill="none" stroke="#f2f2f4" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14 20V44"/><path d="M26 20L15 32L26 44"/><path d="M33 20H38a12 12 0 0 1 0 24H33Z"/>
+          </g>
+          <rect x="39" y="28" width="5" height="8" rx="1" fill="#ff4fa3"/>
+        </svg>
+        KD
+      </a>
+      <nav aria-label="Основное меню">
+        <a href="#services">Услуги</a>
+        <a href="#how">Как работаем</a>
+        <a class="btn btn-glossy btn-pink btn-sm" href="#contact"><span>Обсудить проект</span></a>
+      </nav>
+    </div>
+
+    <div class="hero-grid" id="top">
+      <div>
+        <h1 class="display">Больше клиентов из соцсетей, меньше ручной рутины<span class="cursor" aria-hidden="true"></span></h1>
+        <p class="lead">KD ведёт соцсети и блоги, запускает Яндекс.Директ, делает сайты и настраивает автоматизацию. Нейросети делают рутину быстро, а люди отвечают за смысл и результат.</p>
+        <div class="actions">
+          <a class="btn btn-glossy btn-pink" href="#contact"><span>Обсудить проект</span></a>
+          <a class="btn btn-ghost" href="#services"><span>Смотреть услуги</span></a>
+        </div>
+      </div>
+
+      <div class="tune" id="tune">
+        <div class="tune-head">
+          <span class="muted">Объём работ</span>
+          <span class="val" id="tune-val">Рост</span>
+          <svg class="info" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" aria-label="Подсказка"><title>Подвиньте ползунок: от быстрого запуска до полной работы под ключ</title><circle cx="10" cy="10" r="8"/><path d="M7.8 7.8a2.3 2.3 0 1 1 3.3 2.1c-.7.4-1.1.8-1.1 1.6"/><circle cx="10" cy="14.2" r=".6" fill="currentColor"/></svg>
+        </div>
+        <div class="tune-scale"><span>Быстрее</span><span>Глубже</span></div>
+        <div class="rangewrap">
+          <div class="ticks" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+          <input id="tune-range" type="range" min="0" max="3" step="1" value="1" aria-label="Объём работ" aria-describedby="tune-list">
+        </div>
+        <p class="tune-note" id="tune-note">Рекомендуем</p>
+        <ul class="tune-list" id="tune-list" aria-live="polite"></ul>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section id="services">
+    <div class="wrap">
+      <h2 class="display reveal">Один подрядчик вместо пяти</h2>
+      <p class="section-lead reveal" style="--d:.08s">Всё для продвижения работает вместе. Выберите задачу, и мы начнём с неё.</p>
+
+      <div class="groups">
+        <div class="group reveal" style="--d:.05s">
+          <h3>Привлекаем клиентов</h3>
+          <div class="items">
+            <a class="item" href="#contact" data-service="Маркетинг и стратегия"><b>Маркетинг и стратегия</b><span>Аудитория, каналы, цена клиента</span></a>
+            <a class="item" href="#contact" data-service="Яндекс.Директ"><b>Яндекс.Директ</b><span>Поиск и РСЯ: запуск и оптимизация</span></a>
+            <a class="item" href="#contact" data-service="SMM и таргет"><b>SMM и таргет</b><span>Telegram, VK, Instagram, TikTok</span></a>
+          </div>
+        </div>
+        <div class="group reveal" style="--d:.15s">
+          <h3>Ведём и наполняем</h3>
+          <div class="items">
+            <a class="item" href="#contact" data-service="Ведение соцсетей"><b>Ведение соцсетей</b><span>Посты, сторис, ответы подписчикам</span></a>
+            <a class="item" href="#contact" data-service="Ведение блогов"><b>Ведение блогов</b><span>Личные и экспертные блоги под ключ</span></a>
+            <a class="item" href="#contact" data-service="Создание контента"><b>Создание контента</b><span>Тексты, графика, видео и reels</span></a>
+          </div>
+        </div>
+        <div class="group reveal" style="--d:.25s">
+          <h3>Строим и автоматизируем</h3>
+          <div class="items">
+            <a class="item" href="#contact" data-service="Создание сайтов"><b>Создание сайтов</b><span>Лендинги на ИИ и вайб-кодинге</span></a>
+            <a class="item" href="#contact" data-service="Автоматизация процессов"><b>Автоматизация процессов</b><span>Заявки, CRM и отчёты без рук</span></a>
+            <a class="item" href="#contact" data-service="ИИ-ассистенты и боты"><b>ИИ-ассистенты и боты</b><span>Отвечают клиентам 24/7</span></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="desire" id="how">
+    <div class="wrap">
+      <h2 class="display reveal">Что вы получаете</h2>
+
+      <div class="gains">
+        <div class="gain reveal" style="--d:.05s">
+          <h3>Заявки без ручной возни</h3>
+          <p>Клиент написал, бот ответил, заявка легла в CRM. Вы подключаетесь, когда пора закрывать сделку.</p>
+        </div>
+        <div class="gain reveal" style="--d:.15s">
+          <h3>Соцсети, которые не засыхают</h3>
+          <p>Контент выходит по расписанию, комментарии не висят без ответа, а охват растёт не только по праздникам.</p>
+        </div>
+        <div class="gain reveal" style="--d:.25s">
+          <h3>Цифры в одном месте</h3>
+          <p>Сколько потратили, сколько клиентов привели, что сработало. Без тумана и красивых слов.</p>
+        </div>
+      </div>
+
+      <h2 class="display steps-title reveal">Как проходит работа</h2>
+      <ol class="steps">
+        <li class="reveal" style="--d:.05s">
+          <h3>Разбор</h3>
+          <p>Созвон на 30 минут: цели, аудитория, где сейчас теряются клиенты.</p>
+        </li>
+        <li class="reveal" style="--d:.15s">
+          <h3>Запуск</h3>
+          <p>Собираем сайт, контент, рекламу и автоматизацию. Показываем промежуточный результат каждую неделю.</p>
+        </li>
+        <li class="reveal" style="--d:.25s">
+          <h3>Рост</h3>
+          <p>Смотрим на цифры, убираем то, что не работает, усиливаем то, что приносит клиентов.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="action" id="contact">
+    <div class="wrap action-grid">
+      <div class="reveal">
+        <h2 class="display">Расскажите про бизнес, и мы предложим план</h2>
+        <p class="lead">Оставьте заявку или напишите напрямую. Ответим в течение рабочего дня. Чат справа отвечает круглосуточно.</p>
+        <div class="contacts">
+          <a class="btn btn-glossy btn-graphite" href="https://t.me/kd_studio"><span>Написать в Telegram</span></a>
+          <a class="btn btn-glossy btn-graphite" href="mailto:hello@kd.example"><span>hello@kd.example</span></a>
+        </div>
+      </div>
+
+      <form class="form reveal" id="lead-form" style="--d:.1s">
+        <div class="field">
+          <label for="name">Имя</label>
+          <input id="name" name="name" type="text" autocomplete="name" required>
+        </div>
+        <div class="field">
+          <label for="contact-way">Telegram или телефон</label>
+          <input id="contact-way" name="contact" type="text" autocomplete="tel" required>
+        </div>
+        <div class="field">
+          <label for="task">Что нужно сделать</label>
+          <textarea id="task" name="task" placeholder="Например: запустить Директ и Telegram-канал"></textarea>
+        </div>
+        <button class="btn btn-glossy btn-pink" type="submit"><span>Отправить заявку</span></button>
+        <p class="note">Откроется ваша почтовая программа с готовым письмом.</p>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="KD, наверх">
+      <svg viewBox="0 0 64 64" aria-hidden="true">
+        <rect x="0.5" y="0.5" width="63" height="63" rx="15.5" fill="#1a1a1d" stroke="#fff" stroke-opacity=".14"/>
+        <g fill="none" stroke="#f2f2f4" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M14 20V44"/><path d="M26 20L15 32L26 44"/><path d="M33 20H38a12 12 0 0 1 0 24H33Z"/>
+        </g>
+        <rect x="39" y="28" width="5" height="8" rx="1" fill="#ff4fa3"/>
+      </svg>
+      KD
+    </a>
+    <span>2026. Продвижение бизнеса с помощью ИИ</span>
+  </div>
+</footer>
+
+<!-- Чат 24/7 -->
+<button class="btn btn-glossy btn-pink chat-fab" id="chat-open" type="button" aria-expanded="false" aria-controls="chat-panel">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12Z"/></svg>
+  <span>Чат 24/7</span>
+  <i class="dot" aria-hidden="true"></i>
+</button>
+
+<section class="chat" id="chat-panel" role="dialog" aria-label="Чат с KD" hidden>
+  <div class="chat-head">
+    <svg viewBox="0 0 64 64" aria-hidden="true">
+      <rect x="0.5" y="0.5" width="63" height="63" rx="15.5" fill="#0a0a0b" stroke="#fff" stroke-opacity=".14"/>
+      <g fill="none" stroke="#f2f2f4" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M14 20V44"/><path d="M26 20L15 32L26 44"/><path d="M33 20H38a12 12 0 0 1 0 24H33Z"/>
+      </g>
+      <rect x="39" y="28" width="5" height="8" rx="1" fill="#ff4fa3"/>
+    </svg>
+    <div class="who"><b>Мария из KD</b><small>На связи 24/7</small></div>
+    <button class="chat-close" id="chat-close" type="button" aria-label="Закрыть чат">&times;</button>
+  </div>
+  <p class="chat-disclosure">Я ИИ-ассистент KD. Отвечу по услугам, а сложное передам команде.</p>
+  <div class="chat-log" id="chat-log" role="log" aria-live="polite"></div>
+  <div class="chips" id="chat-chips"></div>
+  <form class="chat-form" id="chat-form" autocomplete="off">
+    <input id="chat-input" type="text" placeholder="Напишите вопрос" aria-label="Ваше сообщение" maxlength="500">
+    <button class="btn btn-glossy btn-pink" type="submit"><span>Отправить</span></button>
+  </form>
+</section>
+
+<script>
+  // Подключение настоящего ИИ-агента: укажите адрес прокси (см. server/chat-proxy.mjs).
+  // Пока адрес пустой, чат отвечает по встроенным сценариям.
+  window.KD_CHAT_ENDPOINT = "";
+
+  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var fine = matchMedia('(pointer: fine)').matches && !reduce;
+
+  /* ---------- Слайдер объёма работ ---------- */
+  (function () {
+    var range = document.getElementById('tune-range'), val = document.getElementById('tune-val');
+    var note = document.getElementById('tune-note'), list = document.getElementById('tune-list');
+    var NAMES = ['Старт', 'Рост', 'Масштаб', 'Под ключ'];
+    var ADD = [
+      ['Лендинг с понятным оффером', 'Чат-бот для заявок'],
+      ['Ведение соцсетей', 'Яндекс.Директ с ценой заявки'],
+      ['Блог и контент: тексты, графика, видео', 'Автоматизация: заявки в CRM'],
+      ['Стратегия и сквозная аналитика', 'Еженедельные отчёты с цифрами']
+    ];
+    function render() {
+      var v = +range.value, items = [];
+      for (var i = 0; i <= v; i++) items = items.concat(ADD[i]);
+      val.textContent = NAMES[v];
+      note.textContent = v === 1 ? 'Рекомендуем' : '';
+      range.style.setProperty('--p', (v / 3 * 100) + '%');
+      range.parentNode.style.setProperty('--p', (v / 3 * 100) + '%');
+      list.innerHTML = '';
+      items.forEach(function (t, i) {
+        var li = document.createElement('li'); li.textContent = t; li.style.setProperty('--i', (i * 0.04) + 's'); list.appendChild(li);
+      });
+    }
+    range.addEventListener('input', render); render();
+  })();
+
+  /* ---------- Услуга подставляется в форму ---------- */
+  document.querySelectorAll('.item').forEach(function (el) {
+    el.addEventListener('click', function () {
+      document.getElementById('task').value = 'Интересует: ' + el.dataset.service + '. ';
+    });
+  });
+
+  /* ---------- Заявка через почтовую программу ---------- */
+  document.getElementById('lead-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var f = e.target;
+    var body = 'Имя: ' + f.name.value + '\nКонтакт: ' + f.contact.value + '\n\n' + f.task.value;
+    location.href = 'mailto:hello@kd.example?subject=' + encodeURIComponent('Заявка с сайта KD') + '&body=' + encodeURIComponent(body);
+  });
+
+  /* ---------- Появление блоков ---------- */
+  (function () {
+    var els = document.querySelectorAll('.reveal');
+    if (reduce || !('IntersectionObserver' in window)) { els.forEach(function (el) { el.classList.add('in'); }); return; }
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } });
+    }, { threshold: 0.12 });
+    els.forEach(function (el) { io.observe(el); });
+  })();
+
+  /* ---------- Реакция на курсор ---------- */
+  if (fine) {
+    // Свечение за курсором на первом экране, наклон панели
+    (function () {
+      var hero = document.getElementById('hero'), tune = document.getElementById('tune');
+      var cur = { x: 0, y: 0 }, tar = { x: 0, y: 0 }, raf = 0;
+      function loop() {
+        cur.x += (tar.x - cur.x) * 0.14; cur.y += (tar.y - cur.y) * 0.14;
+        hero.style.setProperty('--sx', cur.x + 'px'); hero.style.setProperty('--sy', cur.y + 'px');
+        raf = (Math.abs(tar.x - cur.x) > 0.5 || Math.abs(tar.y - cur.y) > 0.5) ? requestAnimationFrame(loop) : 0;
+      }
+      hero.addEventListener('pointermove', function (e) {
+        var r = hero.getBoundingClientRect();
+        tar.x = e.clientX - r.left; tar.y = e.clientY - r.top;
+        tune.style.setProperty('--ry', ((tar.x / r.width - 0.5) * 5).toFixed(2) + 'deg');
+        tune.style.setProperty('--rx', (-(tar.y / r.height - 0.5) * 5).toFixed(2) + 'deg');
+        if (!raf) raf = requestAnimationFrame(loop);
+      });
+      hero.addEventListener('pointerleave', function () { tune.style.setProperty('--rx', '0deg'); tune.style.setProperty('--ry', '0deg'); });
+    })();
+
+    // Световое пятно под курсором на строках услуг
+    document.addEventListener('pointermove', function (e) {
+      var t = e.target.closest && e.target.closest('.item');
+      if (!t) return;
+      var r = t.getBoundingClientRect();
+      t.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+      t.style.setProperty('--my', (e.clientY - r.top) + 'px');
+    });
+
+    // Кнопки слегка тянутся к курсору
+    document.querySelectorAll('.btn-glossy').forEach(function (b) {
+      if (b.classList.contains('chat-fab')) return;
+      b.addEventListener('pointermove', function (e) {
+        var r = b.getBoundingClientRect();
+        var dx = (e.clientX - (r.left + r.width / 2)) * 0.14, dy = (e.clientY - (r.top + r.height / 2)) * 0.2;
+        b.style.transform = 'translate(' + dx.toFixed(1) + 'px,' + dy.toFixed(1) + 'px)';
+      });
+      b.addEventListener('pointerleave', function () { b.style.transform = ''; });
+    });
+  }
+
+  /* ---------- Чат ---------- */
+  (function () {
+    var fab = document.getElementById('chat-open'), panel = document.getElementById('chat-panel');
+    var log = document.getElementById('chat-log'), chips = document.getElementById('chat-chips');
+    var form = document.getElementById('chat-form'), input = document.getElementById('chat-input');
+    var history = [], started = false, busy = false;
+
+    var CHIPS = ['Сколько это стоит?', 'Расскажите про Яндекс.Директ', 'Нужен сайт', 'Оставить заявку'];
+
+    function open() {
+      panel.hidden = false; fab.setAttribute('aria-expanded', 'true');
+      if (!started) {
+        started = true;
+        say({ text: 'Здравствуйте! Я Мария, ИИ-ассистент KD. Подскажу по услугам и помогу оставить заявку. С чем хотите разобраться?' });
+        CHIPS.forEach(function (c) {
+          var b = document.createElement('button'); b.type = 'button'; b.className = 'chip'; b.textContent = c;
+          b.addEventListener('click', function () { send(c); });
+          chips.appendChild(b);
+        });
+      }
+      setTimeout(function () { input.focus(); }, 50);
+    }
+    function close() { panel.hidden = true; fab.setAttribute('aria-expanded', 'false'); fab.focus(); }
+    fab.addEventListener('click', open);
+    document.getElementById('chat-close').addEventListener('click', close);
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !panel.hidden) close(); });
+
+    function say(m, who) {
+      var d = document.createElement('div'); d.className = 'msg ' + (who || 'bot');
+      d.appendChild(document.createTextNode(m.text));
+      if (m.go) {
+        d.appendChild(document.createElement('br'));
+        var a = document.createElement('a'); a.className = 'go'; a.href = '#contact'; a.textContent = 'Перейти к форме';
+        a.addEventListener('click', close); d.appendChild(a);
+      }
+      log.appendChild(d); log.scrollTop = log.scrollHeight;
+      if (!who) history.push({ role: 'assistant', content: m.text });
+    }
+    function typing(on) {
+      var t = document.getElementById('typing');
+      if (on && !t) { t = document.createElement('div'); t.id = 'typing'; t.className = 'typing'; t.innerHTML = '<i></i><i></i><i></i>'; log.appendChild(t); log.scrollTop = log.scrollHeight; }
+      if (!on && t) t.remove();
+    }
+
+    // Встроенные сценарии. Цены не называем: их определяют после разбора задачи.
+    var RULES = [
+      [/(ты|вы|вы же|это)\s.*(бот|робот|ии|нейросет|человек|живой|настоящ)|вы\s+человек|кто\s+вы/i,
+        { text: 'Я ИИ-ассистент KD, не живой человек. Но на вопросы по услугам отвечу, а если нужен человек из команды, оставьте контакт, и вам напишут.', go: true }],
+      [/сколько|цен[аыу]|стоим|прайс|тариф|бюджет|дорого/i,
+        { text: 'Цена зависит от задачи и объёма: сайт и ведение соцсетей считаются по-разному. Точную сумму называем после короткого созвона на 30 минут. Расскажите, что хотите сделать, и подскажу, с чего начать.' }],
+      [/директ|яндекс|контекст|реклам/i,
+        { text: 'Яндекс.Директ настраиваем и ведём: подбираем запросы, делаем объявления для поиска и РСЯ, следим за ценой заявки и отключаем то, что не окупается. У вас запуск с нуля или уже есть кампании?' }],
+      [/сайт|лендинг|страниц|интернет-магазин/i,
+        { text: 'Делаем лендинги и сайты: собираем быстро с помощью ИИ, потом проверяем вручную. Какой нужен: визитка, лендинг под рекламу или магазин?' }],
+      [/блог|контент|пост|рилс|reels|сторис|видео|текст/i,
+        { text: 'Ведём блоги и соцсети под ключ: контент-план, тексты, графика, видео и reels, ответы подписчикам. В каких соцсетях вы сейчас и сколько публикаций в неделю хотите?' }],
+      [/смм|smm|таргет|соцсет|telegram|телеграм|инстаграм|вк\b|тикток|tiktok/i,
+        { text: 'Продвигаем в Telegram, VK, Instagram и TikTok: таргет, работа с блогерами, ведение аккаунтов. Какая соцсеть у вас основная?' }],
+      [/автомат|бот|crm|црм|заявк.*сам|ассистент/i,
+        { text: 'Автоматизируем рутину: заявки сами попадают в CRM, бот отвечает клиентам ночью и в выходные, отчёты собираются без ручной работы. Что у вас сейчас отнимает больше всего времени?' }],
+      [/срок|как\s+быстро|когда\s+будет|долго/i,
+        { text: 'Сроки зависят от задачи: лендинг делается быстрее, чем система с автоматизацией. Точнее скажем после разбора, он занимает 30 минут.' }],
+      [/заявк|связ|контакт|почт|телефон|созвон|позвон|напис/i,
+        { text: 'Проще всего оставить заявку в форме на странице или написать на hello@kd.example. Команда ответит в течение рабочего дня.', go: true }],
+      [/спасибо|благодар|понятно|ясно|отлично/i,
+        { text: 'Пожалуйста! Если появятся ещё вопросы, пишите. Я на связи в любое время.' }],
+      [/привет|здравств|добрый|хай|hello/i,
+        { text: 'Здравствуйте! Чем могу помочь?' }]
+    ];
+    function local(text) {
+      for (var i = 0; i < RULES.length; i++) if (RULES[i][0].test(text)) return RULES[i][1];
+      return { text: 'Понимаю. Чтобы ответить точнее, уточните: вы хотите больше заявок, порядок в процессах или новый сайт? Если проще обсудить голосом, оставьте заявку, и команда свяжется.', go: true };
+    }
+
+    function ask(text) {
+      var ep = window.KD_CHAT_ENDPOINT;
+      if (!ep) return Promise.resolve(local(text));
+      return fetch(ep, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ messages: history }) })
+        .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+        .then(function (j) { return { text: j.reply }; })
+        .catch(function () { return local(text); });
+    }
+
+    function send(text) {
+      text = (text || '').trim();
+      if (!text || busy) return;
+      busy = true; chips.hidden = true;
+      say({ text: text }, 'me'); history.push({ role: 'user', content: text });
+      input.value = '';
+      var t0 = Date.now();
+      typing(true);
+      ask(text).then(function (m) {
+        // Небольшая пауза, как будто человек читает и печатает
+        var wait = Math.max(0, Math.min(500 + m.text.length * 14, 2200) - (Date.now() - t0));
+        setTimeout(function () { typing(false); say(m); busy = false; input.focus(); }, reduce ? 0 : wait);
+      });
+    }
+    form.addEventListener('submit', function (e) { e.preventDefault(); send(input.value); });
+  })();
+</script>
+</body>
+</html>
